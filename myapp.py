@@ -49,18 +49,34 @@ def post_data():
 
 def update_data():
     data={
-        'id':1,
-        'name':'new data ',
+        'id':3,
+        'name':'abu bakar',
         'status':'DONE',
     }
     
         
     json_data=json.dumps(data)
     
-    r=requests.post(url = URL , data = json_data)
+    r=requests.put(url = URL , data = json_data)
      
     res_data=r.json()
     
     print(res_data)
 
-update_data()
+# update_data()
+
+
+
+
+# Delete Data 
+def delete_data(id):
+    data={'id':id,}
+    json_data=json.dumps(data)
+    
+    r=requests.delete(url = URL , data = json_data)
+     
+    res_data=r.json()
+    
+    print(res_data)
+
+delete_data(2)

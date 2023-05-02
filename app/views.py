@@ -6,11 +6,14 @@ from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
 from django.http import  JsonResponse , HttpResponse
 from django.views.decorators.csrf import csrf_exempt
-
+import json
 # Create your views here.
 
 @csrf_exempt
 def todoAPI(request):
+    
+    
+    # GET
     if request.method=='GET':
         data=request.body
         stream=io.BytesIO(data)
@@ -30,6 +33,7 @@ def todoAPI(request):
     
     
     
+    # INSERT
     if request.method == 'POST':
         data=request.body
         stream=io.BytesIO(data)
@@ -47,11 +51,42 @@ def todoAPI(request):
         return JsonResponse(serializer.errors)
     
     
+    
+    
+    # EDIT
     if request.method == 'PUT':
         data = request.body
-        stream = io.BytesIO(stream)
+        stream = io.BytesIO(data)
         python_data = JSONParser().parse(stream)
         
-        serializer = TodoSerializer(data = python_data , partial = True )  
-         
+        id = python_data.get('id')
+        
+        todo_d = Todo.objects.get(id = id)
+        
+        serializer = TodoSerializer( todo_d , data = python_data , partial = True )  
+        
+        if serializer.is_valid():
+            serializer.save()
+            
+            res = {'msg' : 'updated successfully'}
+            
+            json_response = json.dumps(res)
+            
+            return JsonResponse(json_response , safe=False)
+        
+        return JsonResponse(serializer.errors , safe=False)
+    
+    
+    
+    # DELETE
+    if request.method == 'DELETE':
+        data = request.body
+        stream = io.BytesIO(data)
+        python_data = JSONParser().parse(stream)
+        id = python_data.get('id')
+        todo_d = Todo.objects.get(id = id).delete()
+        res = {'msg' : 'deleted successfully'}
+        json_response = json.dumps(res)
+        
+        return JsonResponse(json_response , safe=False)
         
