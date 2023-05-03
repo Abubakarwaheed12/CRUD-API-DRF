@@ -22,15 +22,15 @@ def get_data( id = None):
     print(res_data)
 
 
-# get_data(2)   
+# get_data()   
 
 
 
 # Insert Data 
 def post_data():
     data={
-        'name':'new data ',
-        'status':'DONE',
+        'name':'Validation',
+        'status':'PENDING',
     }
     
         
@@ -42,7 +42,7 @@ def post_data():
     
     print(res_data)
 
-# post_data()
+post_data()
 
 
 # Update Data 
@@ -79,4 +79,4 @@ def delete_data(id):
     
     print(res_data)
 
-delete_data(2)
+# delete_data(3)

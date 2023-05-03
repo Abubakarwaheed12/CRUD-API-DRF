@@ -16,5 +16,26 @@ class TodoSerializer(serializers.Serializer):
         instance.status = validated_data.get('status' , instance.status )
         
         instance.save()
-        
         return instance 
+    
+    # Field Level Validation
+    
+    def validate_status(self, value):
+        if value != 'DONE' and value != 'PENDING' and  value != 'TRASH' and value != 'DOING':  
+            raise serializers.ValidationError('Status is not correct')
+        return value
+    
+    # Object Level Validation
+    
+    def validate(self, data):
+        nm=data.get('name')
+        stat=data.get('status')
+        
+        if not nm[0].isupper():
+            raise serializers.ValidationError('First letter of name must be capital ..')
+        
+        if not stat.upper():
+            raise serializers.ValidationError('status must be in capital case ...!!')
+        
+        return data
+        
