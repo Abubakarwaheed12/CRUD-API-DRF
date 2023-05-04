@@ -12,10 +12,11 @@ def get_data( id = None):
     
     if id is not None:
         data={'id':id}
-        
+    
     json_data=json.dumps(data)
     
-    r=requests.get(url = URL , data = json_data)
+    headers={'content-type':'application/json'}
+    r=requests.get(url = URL , headers=headers ,  data = json_data)
      
     res_data=r.json()
     
@@ -29,35 +30,37 @@ def get_data( id = None):
 # Insert Data 
 def post_data():
     data={
-        'name':'Rohit',
+        'name':'mmmmmmmm',
         'status':'PENDING',
     }
     
         
     json_data=json.dumps(data)
     
-    r=requests.post(url = URL , data = json_data)
+    headers={'content-type':'application/json'}
+    r=requests.post(url = URL , headers=headers ,  data = json_data)
      
     res_data=r.json()
     
     print(res_data)
 
-post_data()
+# post_data()
 
 
 # Update Data 
 
 def update_data():
     data={
-        'id':3,
-        'name':'abu bakar',
+        'id':13,
+        'name':' bakar',
         'status':'DONE',
     }
     
         
     json_data=json.dumps(data)
     
-    r=requests.put(url = URL , data = json_data)
+    headers={'content-type':'application/json'}
+    r=requests.put(url = URL , headers=headers ,  data = json_data)
      
     res_data=r.json()
     
@@ -73,10 +76,11 @@ def delete_data(id):
     data={'id':id,}
     json_data=json.dumps(data)
     
-    r=requests.delete(url = URL , data = json_data)
-     
+    headers={'content-type':'application/json'}
+    r=requests.delete(url = URL , headers=headers ,  data = json_data)
+    
     res_data=r.json()
     
     print(res_data)
 
-# delete_data(3)
+delete_data(3)
