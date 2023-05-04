@@ -1,8 +1,14 @@
 from app.models import Todo
 from rest_framework import serializers
 
+
+ # Validators 
+def start_with_r(value):
+    if value[0]!= 'R':
+        raise serializers.ValidationError('value must be start R') 
+
 class TodoSerializer(serializers.Serializer):
-    name=serializers.CharField(max_length=200)
+    name=serializers.CharField(max_length=200 , validators=[start_with_r])
     status=serializers.CharField(max_length=200)    
     
     
@@ -38,4 +44,8 @@ class TodoSerializer(serializers.Serializer):
             raise serializers.ValidationError('status must be in capital case ...!!')
         
         return data
+    
+    
+
+    
         

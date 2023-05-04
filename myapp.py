@@ -29,7 +29,7 @@ def get_data( id = None):
 # Insert Data 
 def post_data():
     data={
-        'name':'Validation',
+        'name':'Rohit',
         'status':'PENDING',
     }
     
