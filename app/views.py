@@ -21,10 +21,14 @@ class TodoAPI(APIView):
         id = pk
         print(id)
         if id is not None:
-            todo=Todo.objects.get(id=id)
-            serializer=TodoSerializer(todo)
-            return Response({'msg':'This is Get Request','todo':serializer.data } , status=status.HTTP_200_OK) 
-        
+            todo=Todo.objects.get(id=id) if  Todo.objects.filter(id=id).exists() else None
+
+            print( 'rodo obj' ,  todo)
+            if todo != None:
+                serializer=TodoSerializer(todo)
+                return Response({'msg':'This is Get Request','todo':serializer.data } , status=status.HTTP_200_OK) 
+            return Response({'msg':'User not found' } , status=status.HTTP_204_NO_CONTENT)
+
         todo=Todo.objects.all()
         serializer=TodoSerializer(todo , many=True)
         return Response({'msg':'This is Get Request','todo':serializer.data} , status=status.HTTP_200_OK) 
